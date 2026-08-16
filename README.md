@@ -1,34 +1,31 @@
-# dsh-tavern · DeepSeek 酒馆
+# dsh-tavern · DSh 酒馆插件
 
-把「酒馆」嵌入 DeepSeek Harness (dsh) Web UI 的**原生管理面板插件**。侧边栏多一个 **「🍺 酒馆管理」** 入口，点开即在会话区打开一个原生面板（非 iframe），可以：
+DeepSeek Harness 的**原生酒馆管理面板**。侧边栏多一个「🍺 酒馆管理」入口，不用 iframe、随 DSH 深浅色换肤，点别的工作区自动关闭。
 
-- 导入**多份角色卡**（PNG / JSON，含内嵌"角色世界书"联动导入）
-- 导入**多份世界书**（每本可折叠，每条目可独立开关，显示内容预览）
-- 导入**多份预设**（可相互切换，每个模块可独立开关）
-- 然后一键把「启用中的角色 + 启用中的世界书条目 + 当前预设的启用模块」**合并生成** `agent.cordis.yml` 保存到 Harness 预设。
+支持：**多角色卡**（PNG/JSON，含内嵌"角色世界书"联动导入）、**多世界书**（可折叠、每条目独立开关）、**多预设**（可切换、每模块独立开关），一键合并生成 `agent.cordis.yml` 保存到 Harness。
 
-其它特性：面板跟随 DSH **深色/浅色**主题自动换肤；点侧边栏其它工作区时**自动关闭**面板。
-
-## 安装
+## 安装（二选一）
 
 ```sh
-# 从 npm 发布后安装（也可从 GitHub 仓库 / Release 的 tgz 直接装）
+# 从 npm（推荐，免 build 授权）
 dsh plugin --profile web add dsh-tavern
+
+# 或从 GitHub Release 安装包
+dsh plugin --profile web add https://github.com/chen731215-dev/dsh-tavern/releases/download/v1.0.0/dsh-tavern-1.0.0.tgz
 ```
 
-## 使用
+装完**重启 dsh web**。
 
-1. 侧边栏点 **「🍺 酒馆管理」** 打开面板。
-2. 导入角色卡 / 世界书 / 预设（可各导入多份）。
-3. 勾选要启用的角色与世界书条目，切换到想用的预设。
-4. 点 **「💾 保存到 Harness」**，生成的 `agent.cordis.yml` 会写入 `~/.dsh/.agent-presets/tavern-lite/`。
-5. 回到 Harness 选用对应预设即可。
+## 如何使用
 
-## 说明
+1. 侧边栏点击 **「🍺 酒馆管理」** 打开面板。
+2. **导入角色卡**：点「角色卡」的文件选择，选 PNG 或 JSON 角色卡（可多份，角色卡自带的"角色世界书"会自动一起导入）。
+3. **导入世界书 / 预设**：同理可各导入多份。
+4. **勾选启用**：在世界书里勾选要启用的条目；在预设里点「切换到此预设」并勾选要用的模块。
+5. 点 **「💾 保存到 Harness」**，面板会把「启用中的角色 + 启用中的世界书条目 + 当前预设的模块」合并成 `agent.cordis.yml` 写入 `~/.dsh/.agent-presets/tavern-lite/`。
+6. 回到 Harness，在模型/预设里选用这个预设即可开始角色扮演。
 
-- 管理面板是原生 DOM 面板，随 DSH 深浅色联动，风格统一。
-- 当前启用的是 `client.manager.bundle.js`（原生版）；web 页面版的 `DeepSeek酒馆.html` 已不再使用。
-- 本包基于用户自用的酒馆管理插件整理发布。
+> 深色/浅色会自动跟随；点侧边栏其它工作区会收起酒馆面板。
 
 ## License
 
