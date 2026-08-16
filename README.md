@@ -11,7 +11,7 @@ DeepSeek Harness 的**原生酒馆管理面板**。侧边栏多一个「🍺 酒
 dsh plugin --profile web add dsh-tavern
 
 # 或从 GitHub Release 安装包
-dsh plugin --profile web add https://github.com/chen731215-dev/dsh-tavern/releases/download/v1.0.0/dsh-tavern-1.0.0.tgz
+dsh plugin --profile web add https://github.com/chen731215-dev/dsh-tavern/releases/download/v1.1.0/dsh-tavern-1.1.0.tgz
 ```
 
 装完**重启 dsh web**。
