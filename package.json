@@ -1,5 +1,5 @@
 ﻿{
-    "version":  "1.3.0",
+    "version":  "1.4.0",
     "peerDependencies":  {
                              "@deepseek-ai/dsh-client-runtime":  "^0.1.0-rc.6"
                          },
@@ -10,7 +10,7 @@
                     "./package.json":  "./package.json",
                     ".":  "./lib/index.js"
                 },
-    "description":  "DeepSeek 酒馆 - 会话级多预设隔离，角色卡+世界书+关键词触发注入，记忆总结，关系网，Markdown编辑。",
+    "description":  "DeepSeek 酒馆 - 会话级多预设，角色扮演/小说创作双模式，世界书关键词触发注入，记忆总结，关系网，Markdown编辑，一键安装。",
     "dsh":  {
                 "client":  {
                                "inject":  [
