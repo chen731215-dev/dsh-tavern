@@ -1,26 +1,38 @@
-﻿{
-    "version":  "1.4.0",
-    "peerDependencies":  {
-                             "@deepseek-ai/dsh-client-runtime":  "^0.1.0-rc.6"
-                         },
-    "name":  "dsh-tavern",
-    "type":  "module",
-    "exports":  {
-                    "./client":  "./lib/client.manager.bundle.js",
-                    "./package.json":  "./package.json",
-                    ".":  "./lib/index.js"
-                },
-    "description":  "DeepSeek 酒馆 - 会话级多预设，角色扮演/小说创作双模式，世界书关键词触发注入，记忆总结，关系网，Markdown编辑，一键安装。",
-    "dsh":  {
-                "client":  {
-                               "inject":  [
-                                              "@deepseek-ai/dsh-client-runtime"
-                                          ],
-                               "platform":  "web"
-                           },
-                "bundle":  {
-                               "patch":  "./cordis.patch.yml"
-                           }
-            },
-    "main":  "lib/index.js"
+{
+  "name": "dsh-tavern",
+  "version": "1.4.1",
+  "description": "DeepSeek 酒馆 - 会话级多预设，角色扮演/小说创作双模式，世界书关键词触发注入，记忆总结，关系网，Markdown编辑，一键安装。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.manager.bundle.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "test": "node --test tests/"
+  },
+  "files": [
+    "lib",
+    "tests",
+    "cordis.patch.yml",
+    "install.cmd",
+    "install.ps1",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6"
+  }
 }
