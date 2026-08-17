@@ -1,6 +1,6 @@
-﻿{
+{
   "name": "dsh-tavern",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "DeepSeek 酒馆 - embed the tavern into DeepSeek Harness Web UI as a native management panel: multiple character cards, multiple worldbooks, switchable presets, deep-light theme, auto-dismiss.",
   "type": "module",
   "main": "lib/index.js",
