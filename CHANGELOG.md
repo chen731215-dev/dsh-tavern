@@ -1,6 +1,15 @@
 # Changelog
 
 
+## v1.7.1 (2026-08-20)
+
+### 📝 文档与合规
+- 新增「写 NSFW 的正确用法」：酒馆预设 + 已配置好的 agent 预设必须搭配一起使用（README / TUTORIAL）
+- 移除第三方预设引用（类脑社区「三人逆行」），示例改为通用说法，避免来源问题
+- 修正预设示例名，改为中性示例
+- 内置 `tests/core.test.js`（`lib/utils.js` 单元测试，17 个用例，`node --test tests\` 可跑）
+- package.json 补充 repository 字段
+
 ## v1.7.0 (2026-08-19)
 
 ### ✨ 新功能

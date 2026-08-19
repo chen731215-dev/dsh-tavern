@@ -1,6 +1,6 @@
 {
   "name": "dsh-tavern",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "DeepSeek Harness 酒馆管理插件 - 角色扮演、角色卡/世界书/预设管理、多会话隔离、记忆总结、关系网、剧情选项",
   "type": "module",
   "main": "lib/index.js",
@@ -8,6 +8,10 @@
     ".": "./lib/index.js",
     "./client": "./lib/client.manager.bundle.js",
     "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chen731215-dev/dsh-tavern.git"
   },
   "keywords": [
     "dsh",
