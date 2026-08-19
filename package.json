@@ -1,0 +1,37 @@
+{
+  "name": "dsh-tavern",
+  "version": "1.6.0",
+  "description": "DeepSeek Harness 酒馆管理插件 - 角色扮演、角色卡/世界书/预设管理、多会话隔离、记忆总结、关系网、剧情选项",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.manager.bundle.js",
+    "./package.json": "./package.json"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "tavern",
+    "roleplay",
+    "character-card",
+    "worldbook",
+    "sillytavern"
+  ],
+  "author": "chen731215",
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6"
+  }
+}
