@@ -19,9 +19,7 @@
     "sillytavern"
   ],
   "author": "chen731215",
-  "repository": { "type": "git", "url": "git+https://github.com/chen731215-dev/dsh-tavern.git" },
   "license": "CC-BY-NC-SA-4.0",
-  "files": ["lib","tests","cordis.patch.yml","CHANGELOG.md","README.md","LICENSE","TUTORIAL.md"],
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
