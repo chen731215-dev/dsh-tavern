@@ -1,6 +1,6 @@
 {
   "name": "dsh-tavern",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "DeepSeek Harness 酒馆管理插件 - 角色扮演、角色卡/世界书/预设管理、多会话隔离、记忆总结、关系网、剧情选项",
   "type": "module",
   "main": "lib/index.js",
@@ -19,7 +19,9 @@
     "sillytavern"
   ],
   "author": "chen731215",
+  "repository": { "type": "git", "url": "git+https://github.com/chen731215-dev/dsh-tavern.git" },
   "license": "CC-BY-NC-SA-4.0",
+  "files": ["lib","tests","cordis.patch.yml","CHANGELOG.md","README.md","LICENSE","TUTORIAL.md"],
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
