@@ -19,7 +19,7 @@
     "sillytavern"
   ],
   "author": "chen731215",
-  "license": "MIT",
+  "license": "CC-BY-NC-SA-4.0",
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
