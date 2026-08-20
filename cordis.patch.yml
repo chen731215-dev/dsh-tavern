@@ -1,4 +1,4 @@
 # dsh-tavern bundle patch: inserts the tavern plugin row into the web plugin roster.
 - insert:
     - id: tavern
-      name: '@local/dsh-tavern'
+      name: 'dsh-tavern'
