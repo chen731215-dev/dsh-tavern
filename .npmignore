@@ -1,0 +1,7 @@
+﻿*.bak*
+*.bak-*
+*.tgz
+node_modules/
+.github/
+tests/
+.agent-presets/
