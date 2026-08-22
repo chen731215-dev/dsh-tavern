@@ -1,7 +1,7 @@
 {
   "name": "dsh-tavern",
-  "version": "1.9.0",
-  "description": "DeepSeek Harness 閰掗绠＄悊鎻掍欢 - 瑙掕壊鎵紨銆佽鑹插崱/涓栫晫涔?棰勮绠＄悊銆佸浼氳瘽闅旂銆佽蹇嗘€荤粨銆佸叧绯荤綉銆佸墽鎯呴€夐」",
+  "version": "1.9.1",
+  "description": "DeepSeek Harness 酒馆管理插件 - 角色扮演、角色卡/世界书/预设管理、多会话隔离、记忆总结、关系网、剧情选项",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
