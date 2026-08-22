@@ -24,6 +24,14 @@
   ],
   "author": "chen731215",
   "license": "CC-BY-NC-SA-4.0",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "test": "node --test tests/core.test.js",
+    "check": "node --check lib/index.js && node --check lib/utils.js && node --check tests/core.test.js",
+    "check:client": "node --check lib/client.manager.bundle.js"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"

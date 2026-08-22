@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用问答
+    url: https://github.com/chen731215-dev/dsh-tavern/discussions
+    about: 有使用问题或不确定是不是 bug，请先在 Discussions 中提问
+  - name: 查看文档
+    url: https://github.com/chen731215-dev/dsh-tavern/blob/main/README.md
+    about: 先阅读 README 和 TUTORIAL，可能已经有答案

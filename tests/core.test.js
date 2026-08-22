@@ -160,3 +160,137 @@ test('contentToText: 多段文本拼接', () => {
 })
 
 console.log('\n✅ 所有测试通过！')
+
+// ── 清理逻辑（兼容性测试：DSH 不支持 SillyTavern 变量系统）──
+import { _test } from '../lib/index.js'
+
+const { cleanSillyTavernVars, sanitizePromptText, randomPick, randomRoll, normalizeName, cleanName } = _test
+
+test('cleanSillyTavernVars: 移除双冒号变量 {{xxx::yyy}}', () => {
+  assert.equal(cleanSillyTavernVars('a{{setvar::key::value}}b'), 'ab')
+  assert.equal(cleanSillyTavernVars('{{format_message_variable::stat_data}}'), '')
+})
+
+test('cleanSillyTavernVars: 移除中文名/点开头/多行变量', () => {
+  assert.equal(cleanSillyTavernVars('{{涩调}}'), '')
+  assert.equal(cleanSillyTavernVars('{{.side_last_dir}}'), '')
+  assert.equal(cleanSillyTavernVars('{{SYSTEM_INIT::\nSEED=x\n}}'), '')
+})
+
+test('cleanSillyTavernVars: 保留 DSH 合法变量 provider/model/cwd', () => {
+  assert.equal(cleanSillyTavernVars('{{provider}}/{{model}}/{{cwd}}'), '{{provider}}/{{model}}/{{cwd}}')
+})
+
+test('cleanSillyTavernVars: 友好替换常见 ST 变量', () => {
+  assert.equal(cleanSillyTavernVars('{{user}}和{{char}}'), '和')
+  assert.equal(cleanSillyTavernVars('{{name}}'), '')
+})
+
+test('sanitizePromptText: random 随机取一个值', () => {
+  const out = sanitizePromptText('选一个{{random::甲,乙,丙}}')
+  assert.ok(['甲', '乙', '丙'].includes(out.replace('选一个', '')))
+})
+
+test('sanitizePromptText: roll 生成随机数', () => {
+  const out6 = Number(sanitizePromptText('{{roll::6}}'))
+  assert.ok(out6 >= 1 && out6 <= 6)
+  const out28 = Number(sanitizePromptText('{{roll::2,8}}'))
+  assert.ok(out28 >= 2 && out28 <= 8)
+})
+
+test('sanitizePromptText: user/char 友好替换', () => {
+  assert.equal(sanitizePromptText('{{user}}说', '角色'), '用户说')
+  assert.equal(sanitizePromptText('{{char}}说', '角色'), '角色说')
+})
+
+test('sanitizePromptText: 多行 SYSTEM_INIT 变量删除', () => {
+  assert.equal(sanitizePromptText('前{{SYSTEM_INIT::\nSEED=rand(1,9)\n}}后'), '前后')
+})
+
+test('sanitizePromptText: 普通文本不被破坏', () => {
+  const text = '你是一个角色扮演助手，请保持剧情连贯。'
+  assert.equal(sanitizePromptText(text), text)
+})
+
+test('randomPick: 空返回空串', () => {
+  assert.equal(randomPick(''), '')
+  assert.equal(randomPick('  ,  ,  '), '')
+})
+
+test('randomRoll: 非法输入返回空串', () => {
+  assert.equal(randomRoll('abc'), '')
+  assert.equal(randomRoll(''), '')
+})
+
+test('normalizeName: 用户称呼归一化为"你"', () => {
+  assert.equal(normalizeName('玩家'), '你')
+  assert.equal(normalizeName('主角'), '你')
+  assert.equal(normalizeName('用户'), '你')
+  assert.equal(normalizeName('食客'), '你')
+  assert.equal(normalizeName('食客（男主角）'), '你')
+  assert.equal(normalizeName('你'), '你')
+})
+
+test('normalizeName: 角色名保持不变', () => {
+  assert.equal(normalizeName('花火'), '花火')
+  assert.equal(normalizeName('阿格莱雅'), '阿格莱雅')
+  assert.equal(normalizeName(''), '')
+})
+
+test('normalizeName: 乱码名丢弃', () => {
+  assert.equal(normalizeName('���角'), '')
+})
+
+test('cleanName: 保留合法字符清除乱码', () => {
+  assert.ok(!cleanName('a\uFFFDb').includes('\uFFFD'))
+  assert.equal(cleanName('正常'), '正常')
+})
+
+test('sanitizePromptText: 剥离 thinking 输出指令（防止 deepseek 输出尖括号）', () => {
+  const out = sanitizePromptText('前文<thinking_rules>\n全程用中文思考\n[STEP 0 — IDENTITY]\n</thinking_rules>后文')
+  assert.ok(!out.includes('<thinking'))
+  assert.ok(!out.includes('thinking_rules'))
+  assert.ok(out.includes('前文'))
+  assert.ok(out.includes('后文'))
+})
+
+test('sanitizePromptText: 剥离 output_lock 指令块', () => {
+  const out = sanitizePromptText('<output_lock>\nAt the START of every reply, output this block:\n<thinking>x</thinking>\n</output_lock>正文')
+  assert.ok(!out.includes('output_lock'))
+  assert.ok(!out.includes('<thinking'))
+  assert.ok(out.includes('正文'))
+})
+
+test('sanitizePromptText: 剥离 HTML 注释草稿指令', () => {
+  const out = sanitizePromptText('正文<!-- draft 这是草稿 nerver show -->结尾')
+  assert.ok(!out.includes('<!--'))
+  assert.ok(out.includes('正文'))
+  assert.ok(out.includes('结尾'))
+})
+
+test('sanitizePromptText: 剥离 Prism 每段注释指令和引用', () => {
+  // Prism_tips 块（要求每段前输出 html 注释）
+  const t1 = sanitizePromptText('<Prism_tips>\ndef: 在正文的每一段前，输出一个html注释\n</Prism_tips>正文')
+  assert.ok(!t1.includes('Prism'))
+  assert.ok(!t1.includes('输出一个html注释'))
+  assert.ok(t1.includes('正文'))
+  // "总结<Prism>内的所有要求" 引用
+  const t2 = sanitizePromptText('综合调节: 总结<Prism>内的所有要求！一个要求都不能少')
+  assert.ok(!t2.includes('<Prism>'))
+  assert.ok(t2.includes('总结所有写作要求'))
+})
+
+test('sanitizePromptText: 剥离"先打草稿"规划输出指令', () => {
+  // 英文 draft 指令
+  const t1 = sanitizePromptText('[FINAL_CHECK] Draft once. Repair only hits. All draft work inside <content> as HTML comments. 正文')
+  assert.ok(!/Draft once|HTML comments/.test(t1))
+  assert.ok(t1.includes('正文'))
+  // 中文打草稿指令
+  const t2 = sanitizePromptText('打草稿: 在段落前标签内进行，以html注释的形式插入在输出内容中。正文内容')
+  assert.ok(!t2.includes('打草稿'))
+  assert.ok(t2.includes('正文内容'))
+  // cot 标签
+  const t3 = sanitizePromptText('<cot>\n思考步骤\n</cot>\n正文')
+  assert.ok(!t3.includes('<cot>'))
+  assert.ok(t3.includes('正文'))
+})
